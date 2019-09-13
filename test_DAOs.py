@@ -18,6 +18,16 @@ class TestContactDAO(unittest.TestCase):
     def tearDown(self):
         os.remove(self.db_file)
 
+    def isSameContact(self, contact1, contact2):
+        return(
+            contact1.id           == contact2.id           and
+            contact1.first_name   == contact2.first_name   and
+            contact1.last_name    == contact2.last_name    and
+            contact1.phone        == contact2.phone        and
+            contact1.mail         == contact2.mail         and
+            contact1.updated      == contact2.updated      and
+            contact1.updated_date == contact2.updated_date )
+
     def test_when_init_db_is_called_it_should_create_table(self):
         try:
             with sqlite3.connect(self.db_file) as connection:
@@ -43,14 +53,7 @@ class TestContactDAO(unittest.TestCase):
 
         contactReturned = self.contactDAO.get_by_id(id = contact.id)
 
-        self.assertTrue(
-            contact.id           == contactReturned.id           and
-            contact.first_name   == contactReturned.first_name   and
-            contact.last_name    == contactReturned.last_name    and
-            contact.phone        == contactReturned.phone        and
-            contact.mail         == contactReturned.mail         and
-            contact.updated      == contactReturned.updated      and
-            contact.updated_date == contactReturned.updated_date )
+        self.assertTrue(self.isSameContact(contact, contactReturned))
 
     def test_get_by_names_after_add_should_return_inserted_value(self):
         contact = Contact(None, "testFirstName", "testLastName", "911", "testMail", True, "testTime")
@@ -58,14 +61,7 @@ class TestContactDAO(unittest.TestCase):
 
         contactReturned = self.contactDAO.get_by_names(first_name = contact.first_name, last_name = contact.last_name)
 
-        self.assertTrue(
-            contact.id           == contactReturned.id           and
-            contact.first_name   == contactReturned.first_name   and
-            contact.last_name    == contactReturned.last_name    and
-            contact.phone        == contactReturned.phone        and
-            contact.mail         == contactReturned.mail         and
-            contact.updated      == contactReturned.updated      and
-            contact.updated_date == contactReturned.updated_date )
+        self.assertTrue(self.isSameContact(contact, contactReturned))
 
     def test_get_by_id_with_undefined_rowid_should_return_None(self):
         self.assertTrue(self.contactDAO.get_by_id(None) == None)
@@ -120,35 +116,52 @@ class TestContactDAO(unittest.TestCase):
 
         updatedContact = self.contactDAO.get_by_id(contact.id)
 
-        self.assertTrue(
-            contact.id           == updatedContact.id           and
-            contact.first_name   == updatedContact.first_name   and
-            contact.last_name    == updatedContact.last_name    and
-            contact.phone        == updatedContact.phone        and
-            contact.mail         == updatedContact.mail         and
-            contact.updated      == updatedContact.updated      and
-            contact.updated_date == updatedContact.updated_date )
+        self.assertTrue(self.isSameContact(contact, updatedContact))
 
     def test_update_contact_should_return_zero_if_id_does_not_exist(self):
-        pass
+        contact = Contact(None, "testName", "testName", "514", "testMail", True, "testTime")
+        self.assertTrue( self.contactDAO.update(contact) == 0 )
 
     def test_list_contacts_with_no_contacts_added_returns_empty_list(self):
-        pass
+        self.assertTrue( self.contactDAO.list(None) == [] )
 
     def test_list_contacts_with_one_contact_should_return_list_with_contact(self):
-        pass
+        contact = Contact(None, "testFirstName", "testLastName", "911", "testMail", True, "testTime")
+        contact.id = self.contactDAO.add(contact)
+
+        contactList = self.contactDAO.list(True)
+
+        self.assertTrue(len(contactList) == 1 and self.isSameContact(contact, contactList[0]))
 
     def test_list_contacts_with_updated_False_and_all_items_updated_should_return_empty_list(self):
-        pass
+        contact = Contact(None, "testFirstName", "testLastName", "911", "testMail", True, "testTime")
+        contact.id = self.contactDAO.add(contact)
+        contactList = self.contactDAO.list(False)
+        self.assertTrue(len(contactList) == 0)
 
     def test_list_contacts_with_updated_True_and_all_items_not_updated_should_return_empty_list(self):
-        pass
+        contact = Contact(None, "testFirstName", "testLastName", "911", "testMail", False, "testTime")
+        contact.id = self.contactDAO.add(contact)
+        contactList = self.contactDAO.list(True)
+        self.assertTrue(len(contactList) == 0)
 
     def test_list_contacts_with_all_not_updated_items_and_updated_False_should_return_all_contacts(self):
-        pass
+        contact1 = Contact(None, "testFirstName1", "testLastName1", "testNum1", "testMail1", False, "testTime1")
+        contact1.id = self.contactDAO.add(contact1)
+        contact2 = Contact(None, "testFirstName2", "testLastName2", "testNum2", "testMail2", False, "testTime2")
+        contact2.id = self.contactDAO.add(contact2)
+
+        contactList = self.contactDAO.list(False)
+        self.assertTrue(len(contactList) == 2 and self.isSameContact(contact1, contactList[0]) and self.isSameContact(contact2, contactList[1]))
 
     def test_list_contacts_with_all_updated_items_and_updated_True_should_return_all_contacts(self):
-        pass
+        contact1 = Contact(None, "testFirstName1", "testLastName1", "testNum1", "testMail1", True, "testTime1")
+        contact1.id = self.contactDAO.add(contact1)
+        contact2 = Contact(None, "testFirstName2", "testLastName2", "testNum2", "testMail2", True, "testTime2")
+        contact2.id = self.contactDAO.add(contact2)
+
+        contactList = self.contactDAO.list(True)
+        self.assertTrue(len(contactList) == 2 and self.isSameContact(contact1, contactList[0]) and self.isSameContact(contact2, contactList[1]))
 
 if __name__ == '__main__':
     unittest.main()
