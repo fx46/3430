@@ -1,6 +1,7 @@
 from DAOs import ContactDAO
 from models import Contact 
 from datetime import datetime
+import re
 
 class UndefinedID(Exception):
    """Raised when the id value is not defined"""
@@ -118,13 +119,27 @@ class ContactService:
                 self.contactDAO.deactivate(contact.id)
     # To complete and to propose unit test for it
     def check_phone(self, phone):
-        '''
-        Return True if the phone number is a valid american phone number otherwise, it returns False.
-        '''
-        return True
-    # To complete and to propose unit test for it
+        p_num_list = phone.split('-') # get list of each XXX
+
+        if len(p_num_list) is not 3: # if the number has 3 part
+            return False
+        else:
+          if len(p_num_list[0]) is not 3: # Check length of each part
+              return False
+          if len(p_num_list[1]) is not 3:
+              return False
+          if len(p_num_list[2]) is not 4:
+              return False
+          if p_num_list[0].isdecimal() and p_num_list[1].isdecimal() and p_num_list[2].isdecimal(): # check if each part is decimal
+               return True
+        return False
+        
+           # To complete and to propose unit test for it
     def check_mail(self, mail):
         '''
         Return True if the mail address is valid otherwise, it returns False.
         '''
-        return True
+        pattern = re.compile("[A-Za-z0-9-_]+(.[A-Za-z0-9-_]+)*@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})")        
+        return  pattern.match(mail)
+
+        
