@@ -12,10 +12,10 @@ class TestSimpleGraphGeneratorsAC(unittest.TestCase):
     # Simple
     #
     # V1 = {V<0}                    	[erreur]
-    # V2 = {V>=0}                    	[propriete: NbVerticesvalid]
+    # V2 = {V>=0}
     # E1 = {E<0}                    	[erreur]
     # E2 = {E > V*(V-1)/2}              [erreur]
-    # E3 = {0 <= E <= V*(V-1)/2}        [propriete: NbEdgesvalid]
+    # E3 = {0 <= E <= V*(V-1)/2}
     #
     #############################################################################
 
@@ -78,6 +78,78 @@ class TestSimpleGraphGeneratorsAC(unittest.TestCase):
             bException = True
 
         self.assertTrue(self.simpleGraph is not None and bException is False)
+
+    #############################################################################
+    #
+    # Simple_with_probability
+    #
+    # V1 = {V<0}           	    [ValueError]
+    # V2 = {V>=0}
+    # P1 = {P<0.0}           	[ValueError]
+    # P2 = {P>1.0}           	[ValueError]
+    # P3 = {0 <= P <= 1}
+    #
+    #############################################################################
+
+    def test_simple_graph_probility_V1P1(self):
+        bException = False
+
+        try:
+            self.simpleGraph_Probility = generators.simple_with_probability(-1, -0.1)
+        except ValueError:
+            bException = True
+
+        self.assertTrue(self.simpleGraph_Probility is None and bException is True)
+
+    def test_simple_graph_probility_V1P2(self):
+        bException = False
+
+        try:
+            self.simpleGraph_Probility = generators.simple_with_probability(-1, 1.1)
+        except ValueError:
+            bException = True
+
+        self.assertTrue(self.simpleGraph_Probility is None and bException is True)
+
+    def test_simple_graph_probility_V1P3(self):
+        bException = False
+
+        try:
+            self.simpleGraph_Probility = generators.simple_with_probability(-1, 0.5)
+        except ValueError:
+            bException = True
+
+        self.assertTrue(self.simpleGraph_Probility is None and bException is True)
+
+    def test_simple_graph_probility_V2P1(self):
+        bException = False
+
+        try:
+            self.simpleGraph_Probility = generators.simple_with_probability(2, -0.1)
+        except ValueError:
+            bException = True
+
+        self.assertTrue(self.simpleGraph_Probility is None and bException is True)
+
+    def test_simple_graph_probility_V2P2(self):
+        bException = False
+
+        try:
+            self.simpleGraph_Probility = generators.simple_with_probability(2, 1.1)
+        except ValueError:
+            bException = True
+
+        self.assertTrue(self.simpleGraph_Probility is None and bException is True)
+
+    def test_simple_graph_probility_V2P3(self):
+        bException = False
+
+        try:
+            self.simpleGraph_Probility = generators.simple_with_probability(2, 0.5)
+        except ValueError:
+            bException = True
+
+        self.assertTrue(self.simpleGraph_Probility is not None and bException is False)
 
 if __name__ == '__main__':
     unittest.main()
