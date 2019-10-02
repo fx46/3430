@@ -101,35 +101,6 @@ def bipartite_with_probability(V1, V2, p):
                 G.add_edge((vertices[i], vertices[V1+j]))
     return G
 
-
-def path(V):
-    '''
-    Returns a path graph on V vertices.
-    @param V the number of vertices in the path
-    @return a path graph on V vertices
-    '''
-    G = Graph(V)
-    vertices = [i for i in range(V)]
-    rand.shuffle(vertices)
-    for i in range(V-1):
-        G.add_edge((vertices[i],vertices[i+1]))
-    return G
-
-def cycle(V):
-    '''
-    Returns a cycle graph on V vertices.
-    @param V the number of vertices in the cycle
-    @return a cycle graph on V vertices
-    '''
-    G = Graph(V)
-    vertices = [i for i in range(V)]
-    rand.shuffle(vertices)
-    for i in range(V-1):
-        G.add_edge((vertices[i], vertices[i+1]))
-    G.add_edge((vertices[V-1], vertices[0]))
-    return G
-
-
 def eulerianCycle(V, E):
     '''
     Returns an Eulerian cycle graph on V vertices.
@@ -148,65 +119,6 @@ def eulerianCycle(V, E):
     for i in range(E-1):
         G.add_edge((vertices[i], vertices[i+1]))
     G.add_edge((vertices[E-1], vertices[0]))
-    return G
-
-def eulerianPath(V, E):
-    '''
-    Returns an Eulerian path graph on V vertices.
-    @param  V the number of vertices in the path
-    @param  E the number of edges in the path
-    @return a graph that is an Eulerian path on V vertices and E edges
-    @raises ValueError if either V <= 0 or E < 0
-    '''
-    if E < 0:
-        raise ValueError("negative number of edges")
-    if V <= 0:
-        raise ValueError("An Eulerian path must have at least one vertex")
-    G = Graph(V)
-    vertices = []
-    for i in range(E+1):
-        vertices[i] = rand.randrange(V)
-    for i in range(E):
-        G.add_edge((vertices[i], vertices[i+1]))
-    return G
-
-def wheel(V):
-    '''
-    Returns a wheel graph on V vertices.
-    @param V the number of vertices in the wheel
-    @return a wheel graph on V vertices: a single vertex connected to
-    every vertex in a cycle on V-1 vertices
-    '''
-    if V <= 1:
-        raise ValueError("Number of vertices must be at least 2")
-    G = Graph(V)
-    vertices = [i for i in range(V)]
-    rand.shuffle(vertices)
-    # simple cycle on V-1 vertices
-    for i in range(V-1):
-        G.add_edge((vertices[i], vertices[i+1]))
-    G.add_edge((vertices[V-1], vertices[1]))
-    # connect vertices[0] to every vertex on cycle
-    for i in range(V):
-        G.add_edge((vertices[0], vertices[i]))
-
-    return G
-
-def star(V):
-    '''
-    Returns a star graph on V vertices.
-    @param V the number of vertices in the star
-    @return a star graph on V vertices: a single vertex connected to
-     every other vertex
-    '''
-    if V <= 0:
-        raise ValueError("Number of vertices must be at least 1")
-    G = Graph(V)
-    vertices = [i for i in range(V)]
-    rand.shuffle(vertices)
-    # connect vertices[0] to every other vertex
-    for i in range(V):
-        G.add_edge((vertices[0], vertices[i]))    
     return G
 
 def regular(V, k):
