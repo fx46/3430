@@ -4,10 +4,11 @@ import unittest
 class TestSimpleGraphGeneratorsAC(unittest.TestCase):
 
     def setUp(self):
-        self.simpleGraph = None
-        self.simpleGraph_Probility = None
-        self.bipartiteGraph = None
+        self.simpleGraph                = None
+        self.simpleGraph_Probility      = None
+        self.bipartiteGraph             = None
         self.bipartiteGraph_Probability = None
+        self.eulerianCycleGraph         = None
 
     #############################################################################
     #
@@ -333,6 +334,49 @@ class TestSimpleGraphGeneratorsAC(unittest.TestCase):
             bException = True
         self.assertTrue(self.bipartiteGraph_Probability is not None and bException is False)
 
+    #############################################################################
+    #
+    # EulerianCycle
+    #
+    # V1 = {V<=0}           	[ValueError]
+    # V2 = {V>0}
+    # E1 = {E<=0}           	[ValueError]
+    # E2 = {0 < E}
+    #
+    #
+    #############################################################################
+
+    def test_eulerianCycle_V1E1(self):
+        bException = False
+        try:
+            self.eulerianCycleGraph = generators.eulerianCycle(0, 0)
+        except:
+            bException = True
+        self.assertTrue(self.eulerianCycleGraph is None and bException is True)
+
+    def test_eulerianCycle_V1E2(self):
+        bException = False
+        try:
+            self.eulerianCycleGraph = generators.eulerianCycle(0, 1)
+        except:
+            bException = True
+        self.assertTrue(self.eulerianCycleGraph is None and bException is True)
+
+    def test_eulerianCycle_V2E1(self):
+        bException = False
+        try:
+            self.eulerianCycleGraph = generators.eulerianCycle(1, 0)
+        except:
+            bException = True
+        self.assertTrue(self.eulerianCycleGraph is None and bException is True)
+
+    def test_eulerianCycle_V2E2(self):
+        bException = False
+        try:
+            self.eulerianCycleGraph = generators.eulerianCycle(2, 2)
+        except:
+            bException = True
+        self.assertTrue(self.eulerianCycleGraph is not None and bException is False)
 
 if __name__ == '__main__':
     unittest.main()
