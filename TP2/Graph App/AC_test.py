@@ -1,7 +1,7 @@
 import generators
 import unittest
 
-class TestSimpleGraphGeneratorsAC(unittest.TestCase):
+class TestsAC(unittest.TestCase):
 
     def setUp(self):
         self.simple                = None

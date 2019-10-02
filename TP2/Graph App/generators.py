@@ -141,6 +141,7 @@ def eulerianCycle(V, E):
     if E <= 0:
         raise ValueError("An Eulerian cycle must have at least one edge")
     if V <= 0:
+         #prochaine ligne non couverte par tests EC
         raise ValueError("An Eulerian cycle must have at least one vertex")
     G = Graph(V)
     vertices = [rand.randrange(V) for i in range(E)]
