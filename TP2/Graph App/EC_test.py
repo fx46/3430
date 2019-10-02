@@ -178,6 +178,15 @@ class TestsEC(unittest.TestCase):
             bException = True
         self.assertTrue(self.eulerianCycle is None and bException is True)
 
+    # test ajouté lors de la deuxième partie (boite blanche)
+    def test_eulerianCycle_V2E1(self):
+        bException = False
+        try:
+            self.eulerianCycle = generators.eulerianCycle(1, 0)
+        except:
+            bException = True
+        self.assertTrue(self.eulerianCycle is None and bException is True)
+
     def test_eulerianCycle_V2E2(self):
         bException = False
         try:
