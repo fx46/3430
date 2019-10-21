@@ -58,16 +58,6 @@ class TestQueue(unittest.TestCase):
         except Exception as ex:
             self.assertEqual(str(ex), "Queue underflow")
 
-
-    def test_whenDequeOnEmptyQueue_thenRaisesValueErrorQueueUnderFlow(self):
-        queue = Queue()
-        self.assertTrue(queue.isEmpty())
-
-        try:
-            queue.dequeue()
-        except Exception as ex:
-            self.assertEqual(str(ex), "Queue underflow")
-
     def test_whenLastIsCheckedwithOneElement_thenRaisesValueError(self):
         queue = Queue()
         self.assertTrue(queue.isEmpty())
@@ -118,7 +108,6 @@ class TestQueue(unittest.TestCase):
                 self.assertEqual(str(queue.check_last()), str(k))
 
         self.assertTrue(queue.isFull())
-
 
 
 
