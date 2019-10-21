@@ -10,7 +10,6 @@ class TestQueue(unittest.TestCase):
     def tearDown(self):
         pass
 
-
     def test_whenCreateEmptyQueue_thenNoElement(self):
         queue = Queue()
         self.assertFalse(queue.hasOne())
@@ -48,7 +47,6 @@ class TestQueue(unittest.TestCase):
         queue.enqeue(2019)
         self.assertFalse(queue.isEmpty())
 
-
     def test_whenCheckTheLastElmentWithEmptyQueue_thenRaisesValueErrorQueueUnderFlow(self):
         queue = Queue()
         self.assertTrue(queue.isEmpty())
@@ -71,8 +69,6 @@ class TestQueue(unittest.TestCase):
         except Exception as ex:
             self.assertEqual(str(ex), "Queue has only one element (the first one)")
 
-
-
     def test_whenEnqueueMoreThanMaxEnqeueAndDeqeueAndEnqeue_thenRaisesValueErrorQueueOverflowAndDequeueAndEnqeue(self):
         queue = Queue()
         self.assertTrue(queue.isEmpty())
@@ -92,10 +88,7 @@ class TestQueue(unittest.TestCase):
         self.assertFalse(queue.isFull())
         queue.enqeue(1019)
 
-
-
-
-    def test_whenEnqeueToMax_thenDoesNotRaiseException(self):
+    def test_whenEnqeueToMax_thenDoesNotRaiseException_thenDequeueReturnsExpectedValue(self):
         queue = Queue()
         self.assertTrue(queue.isEmpty())
 
@@ -109,7 +102,10 @@ class TestQueue(unittest.TestCase):
 
         self.assertTrue(queue.isFull())
 
-
+        for k in range(0, queue.MAX - 1):
+            self.assertEqual(str(queue.check_last()), str(99))
+            self.assertEqual(str(queue.check_first()), str(k))
+            self.assertEqual(str(queue.dequeue()), str(k))
 
 if __name__ == '__main__':
 	unittest.main()
