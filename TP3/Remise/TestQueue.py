@@ -25,7 +25,7 @@ class TestQueue(unittest.TestCase):
         except Exception as ex:
             self.assertEqual(str(ex), "Queue underflow")
 
-        queue.enqeue(2019)
+        queue.enqeue(Node(2019))
         self.assertFalse(queue.isEmpty())
         queue.dequeue()
         self.assertTrue(queue.isEmpty())
@@ -44,7 +44,7 @@ class TestQueue(unittest.TestCase):
         except Exception as ex:
             self.assertEqual(str(ex), "Queue underflow")
 
-        queue.enqeue(2019)
+        queue.enqeue(Node(2019))
         self.assertFalse(queue.isEmpty())
 
     def test_whenCheckTheLastElmentWithEmptyQueue_thenRaisesValueErrorQueueUnderFlow(self):
@@ -60,7 +60,7 @@ class TestQueue(unittest.TestCase):
         queue = Queue()
         self.assertTrue(queue.isEmpty())
 
-        queue.enqeue(2019)
+        queue.enqeue(Node(2019))
         self.assertFalse(queue.isEmpty())
         self.assertTrue(queue.hasOne())
 
@@ -80,13 +80,13 @@ class TestQueue(unittest.TestCase):
         self.assertTrue(queue.isFull())
 
         try:
-            queue.enqeue(2019)
+            queue.enqeue(Node(2019))
         except Exception as ex:
             self.assertEqual(str(ex), "Queue overflow")
 
         queue.dequeue()
         self.assertFalse(queue.isFull())
-        queue.enqeue(1019)
+        queue.enqeue(Node(1022))
 
     def test_whenEnqeueToMax_thenDoesNotRaiseException_thenDequeueReturnsExpectedValue(self):
         queue = Queue()
@@ -94,7 +94,7 @@ class TestQueue(unittest.TestCase):
 
         for k in range(0, queue.MAX):
             self.assertFalse(queue.isFull())
-            queue.enqeue(k)
+            queue.enqeue(Node(k))
             self.assertEqual(queue.size(), k+1)
             self.assertEqual(str(queue.check_first()), str(0))
             if (queue.size() > 1):
