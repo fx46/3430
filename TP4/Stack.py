@@ -7,7 +7,7 @@ class Node:
 	def __str__(self):
 		return str(self.value)
 
-class Stack : 
+class Stack :
 	# Initializes an empty stack.
 	def __init__(self, max_size, max_trials, size_increment):
 		self.first = None  # beginning of stack
@@ -28,7 +28,7 @@ class Stack :
 	# Returns the number of items in this stack.
 	def size(self):
 		return self.n
-	
+
 	# Returns (but does not remove) item most recently added to this stack.
 	def peek(self):
 		if self.isEmpty():
@@ -50,7 +50,7 @@ class Stack :
 			new_node.next = self.first
 			self.first = new_node
 		self.n += 1
-	
+
 	# Removes and returns the item most recently added to this stack.
 	def pop(self):
 		if self.isEmpty():
@@ -59,7 +59,7 @@ class Stack :
 		self.first = self.first.next
 		self.n -= 1
 		return item
-	
+
 	# Returns a string representation of this stack (the sequence of items in this stack in LIFO order, separated by spaces)
 	def __str__(self):
 		result = "|"
