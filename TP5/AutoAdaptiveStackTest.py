@@ -28,6 +28,7 @@ class AutoAdaptiveStackTest(unittest.TestCase):
         sys.stdout = io.StringIO()
 
         for i in range(self.autoStack3.max_trials):
+            self.assertEqual(i , self.autoStack3.trials)
             self.assertRaises(ValueError, self.autoStack3.push("test4"))
 
         sys.stdout = sys.__stdout__  

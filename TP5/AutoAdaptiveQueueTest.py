@@ -28,6 +28,7 @@ class AutoAdaptiveQueueTest(unittest.TestCase):
         sys.stdout = io.StringIO()
 
         for i in range(self.autoQueue3.max_trials):
+            self.assertEqual(i , self.autoQueue3.trials)
             self.assertRaises(ValueError, self.autoQueue3.enqueue("test4"))
 
         sys.stdout = sys.__stdout__  
