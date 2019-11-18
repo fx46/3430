@@ -4,7 +4,7 @@ from app import LinkedList, Queue, Stack, Calculator
 
 class CalculatorTest(unittest.TestCase):
 
-    def testUnionLinkedList(self):
+    def test_a_UnionLinkedList(self):
         # If list1 is bigger
         list1 = LinkedList()
         list2 = LinkedList()
@@ -73,7 +73,7 @@ class CalculatorTest(unittest.TestCase):
 
 
 
-    def testUnionQueue(self):
+    def test_b_UnionQueue(self):
         queue1 = Queue(3)
         queue2 = Queue(3)
 
@@ -99,7 +99,7 @@ class CalculatorTest(unittest.TestCase):
         self.assertEqual(numbersContained, len(numbers))
         self.assertEqual(unitedStack.max_size, queue1.max_size + queue2.max_size)
 
-    def testUnionStack(self):
+    def test_c_UnionStack(self):
         stack1 = Stack(3)
         stack2 = Stack(3)
 
@@ -125,5 +125,5 @@ class CalculatorTest(unittest.TestCase):
         self.assertEqual(numbersContained, len(numbers))
         self.assertEqual(unitedStack.max_size, stack1.max_size + stack2.max_size)
 
-    def testUnionDifferentTypes(self):
+    def test_d_UnionDifferentTypes(self):
         self.assertRaises(ValueError, Calculator.union, Stack(3), 3)

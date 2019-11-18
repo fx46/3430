@@ -8,11 +8,11 @@ class QueueTest(unittest.TestCase):
         self.queue = Queue(3)
 
     # Test __init__() 
-    def testInit(self):
+    def test_a_Init(self):
         self.assertEqual(self.queue.max_size, 3)
 
     # Test __init__() -> Enqueue() -> Dequeue()
-    def testEnqueuDequeue(self):
+    def test_b_EnqueuDequeue(self):
         self.queue.enqueue("test")
         self.assertFalse(self.queue.isEmpty())
         self.assertTrue(self.queue.size() == 1)

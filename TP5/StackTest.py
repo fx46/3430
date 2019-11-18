@@ -8,11 +8,11 @@ class StackTest(unittest.TestCase):
         self.stack = Stack(3)
 
     # Test __init__() 
-    def testInit(self):
+    def test_a_Init(self):
         self.assertEqual(self.stack.max_size, 3)
 
     # Test __init__() -> push() -> pop()
-    def testPushPop(self):
+    def test_b_PushPop(self):
         self.stack.push("test")
         self.assertFalse(self.stack.isEmpty())
         self.assertTrue(self.stack.size() == 1)

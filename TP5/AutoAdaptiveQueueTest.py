@@ -1,6 +1,4 @@
-import unittest
-import io
-import sys
+import unittest, io, sys
 
 from app import AutoAdaptiveQueue
 
@@ -10,13 +8,13 @@ class AutoAdaptiveQueueTest(unittest.TestCase):
         self.autoQueue3 = AutoAdaptiveQueue(3, 3, 3)
 
     # Test __init__() 
-    def testInit(self):
+    def test_a_Init(self):
         self.assertEqual(self.autoQueue3.max_trials, 3)
         self.assertEqual(self.autoQueue3.size_increment, 3)
         self.assertEqual(self.autoQueue3.trials, 0)
 
     # Test __init__() -> Enqueue()
-    def testEnqueue(self):
+    def test_b_Enqueue(self):
         oldMaxSize = self.autoQueue3.max_size
 
         self.assertTrue(self.autoQueue3.isEmpty())

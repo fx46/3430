@@ -1,6 +1,4 @@
-import unittest
-import io
-import sys
+import unittest, io, sys
 
 from app import AutoAdaptiveStack
 
@@ -10,13 +8,13 @@ class AutoAdaptiveStackTest(unittest.TestCase):
         self.autoStack3 = AutoAdaptiveStack(3, 3, 3)
 
     # Test __init__() 
-    def testInit(self):
+    def test_a_Init(self):
         self.assertEqual(self.autoStack3.max_trials, 3)
         self.assertEqual(self.autoStack3.size_increment, 3)
         self.assertEqual(self.autoStack3.trials, 0)
 
     # Test __init__() -> Push()
-    def testPush(self):
+    def test_b_Push(self):
         oldMaxSize = self.autoStack3.max_size
 
         self.assertTrue(self.autoStack3.isEmpty())
