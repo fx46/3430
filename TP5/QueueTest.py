@@ -34,4 +34,7 @@ class QueueTest(unittest.TestCase):
         self.assertEqual(self.queue.dequeue().value, "test1")
         self.assertEqual(self.queue.dequeue().value, "test2")
         self.assertEqual(self.queue.dequeue().value, "test3")
-        self.assertRaises(ValueError, self.queue.dequeue())
+        try:
+            self.queue.dequeue()
+        except Exception as ex:
+            self.assertEqual(str(ex), "Stack underflow")
