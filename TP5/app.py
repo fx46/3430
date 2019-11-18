@@ -33,7 +33,7 @@ class LinkedList :
 	def peek(self):
 		if self.isEmpty():
 			raise ValueError("linked list underflow")
-		item = self.first.value
+		item = self.first
 		self.first= self.first.next
 		self.n -= 1
 		return item
