@@ -28,7 +28,7 @@ class QueueTest(unittest.TestCase):
         self.assertEqual(self.queue.size(), self.queue.max_size)
         try:
             self.queue.enqueue("test4")
-		except Exception as ex:
+        except Exception as ex:
             self.assertEqual(str(ex), "Queue overflow")
             
         self.assertEqual(self.queue.dequeue().value, "test1")
