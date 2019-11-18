@@ -28,6 +28,7 @@ class LinkedList :
 		if self.isEmpty():
 			raise ValueError("linked list underflow")
 		return self.first
+		#TODO: Possible bug here, replace .first for .value
 	
 	#Removes and returns the first item in the linked list
 	def peek(self):
@@ -82,7 +83,7 @@ class Queue(LinkedList):
 		try:
 			return self.peek()
 		except ValueError:
-			print("Queue underflow")
+			raise ValueError("Stack underflow")
 
 class Stack(LinkedList): 
 	# Initializes an empty stack.
@@ -105,7 +106,7 @@ class Stack(LinkedList):
 		try:
 			return self.peek()
 		except ValueError:
-			print("Stack underflow")
+			raise ValueError("Stack underflow")
 
 class AutoAdaptiveStack(Stack): 
 
