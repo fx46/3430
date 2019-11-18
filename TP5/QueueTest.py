@@ -13,7 +13,6 @@ class QueueTest(unittest.TestCase):
 
     # Test __init__() -> Enqueue() -> Dequeue()
     def testEnqueuDequeue(self):
-
         self.queue.enqueue("test")
         self.assertFalse(self.queue.isEmpty())
         self.assertTrue(self.queue.size() == 1)
