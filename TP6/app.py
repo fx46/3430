@@ -113,7 +113,7 @@ class AutoAdaptiveStack(Stack):
 		self.max_trials = max_trials
 		self.size_increment = size_increment
 		self.trials = 0
-		self.queue = Queue(queueSize);
+		self.queue = Queue(queueSize)
 		super(AutoAdaptiveStack, self).__init__(*args, **kwargs)
 
 	def push(self, item):
