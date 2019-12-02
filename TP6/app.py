@@ -143,21 +143,37 @@ class AutoAdaptiveStack(Stack):
 
 class AutoAdaptiveQueue(Queue):
 
-	def __init__(self, max_trials, size_increment, *args, **kwargs):
+	def __init__(self, max_trials, size_increment, queueSize, *args, **kwargs):
 		self.max_trials = max_trials
 		self.size_increment = size_increment
 		self.trials = 0
+		self.queue = Queue(queueSize)
 		super(AutoAdaptiveQueue, self).__init__(*args, **kwargs)
 
 	def enqueue(self, item):
 		try:
 			super(AutoAdaptiveQueue, self).enqueue(item)
 		except ValueError:
-			print("There is no free space actually :( try later")
-			self.trials += 1
-			if self.trials == self.max_trials:
-				self.max_size += self.size_increment
-				self.trials = 0
+			print("There is no free space actually :( adding item to queue")
+			try:
+				self.queue.enqueue(item)
+			except:
+				print("There is no free space in the queue either D: ")
+				self.trials += 1
+				if self.trials == self.max_trials:
+					self.max_size += self.size_increment
+					self.trials = 0
+	
+	def dequeue(self):
+		try:
+			item = self.peek()
+		except ValueError:
+			raise ValueError("Stack underflow")
+
+		if not self.queue.isEmpty():
+			self.enqueue(self.queue.dequeue())
+
+		return item
 
 class Printer(object, metaclass=abc.ABCMeta):
 	def __init__(self, name):
