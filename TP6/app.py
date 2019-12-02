@@ -9,7 +9,7 @@ class Node:
 	def __str__(self):
 		return str(self.value)
 
-class LinkedList : 
+class LinkedList :
 	# Initializes an empty linked list.
 	def __init__(self):
 		self.first = None  # beginning of linked list
@@ -22,13 +22,13 @@ class LinkedList :
 	# Returns the number of items in this linked list.
 	def size(self):
 		return self.n
-	
-	# Returns the first item added to this linked list 
+
+	# Returns the first item added to this linked list
 	def check(self):
 		if self.isEmpty():
 			raise ValueError("linked list underflow")
 		return self.first
-	
+
 	#Removes and returns the first item in the linked list
 	def peek(self):
 		if self.isEmpty():
@@ -54,14 +54,14 @@ class LinkedList :
 		if self.isEmpty():
 			self.first = new_node
 		else:
-			new_node.next = self.first 
+			new_node.next = self.first
 			self.first = new_node
 		self.n += 1
 
 	def accept(self, visitor):
 		visitor.visit(self)
 
-class Queue(LinkedList): 
+class Queue(LinkedList):
 
 	# Initializes an empty queue.
 	def __init__(self, max_size,  *args, **kwargs):
@@ -84,7 +84,7 @@ class Queue(LinkedList):
 		except ValueError:
 			raise ValueError("Stack underflow")
 
-class Stack(LinkedList): 
+class Stack(LinkedList):
 	# Initializes an empty stack.
 	def __init__(self, max_size, *args, **kwargs):
 		self.max_size = max_size
@@ -99,7 +99,7 @@ class Stack(LinkedList):
 		if self.isFull():
 			raise ValueError("Stack overflow")
 		self.prepend(item)
-	
+
 	# Removes and returns the item most recently added to this stack.
 	def pop(self):
 		try:
@@ -107,25 +107,41 @@ class Stack(LinkedList):
 		except ValueError:
 			raise ValueError("Stack underflow")
 
-class AutoAdaptiveStack(Stack): 
+class AutoAdaptiveStack(Stack):
 
-	def __init__(self, max_trials, size_increment, *args, **kwargs):
+	def __init__(self, max_trials, size_increment, queueSize, *args, **kwargs):
 		self.max_trials = max_trials
 		self.size_increment = size_increment
 		self.trials = 0
+		self.queue = Queue(queueSize);
 		super(AutoAdaptiveStack, self).__init__(*args, **kwargs)
 
 	def push(self, item):
 		try:
 			super(AutoAdaptiveStack, self).push(item)
 		except:
-			print("There is no free space actually :( try later")
-			self.trials += 1
-			if self.trials == self.max_trials:
-				self.max_size += self.size_increment
-				self.trials = 0
-	
-class AutoAdaptiveQueue(Queue): 
+			print("There is no free space actually :( adding item to queue")
+			try:
+				self.queue.enqueue(item)
+			except:
+				print("There is no free space in the queue either D: ")
+				self.trials += 1
+				if self.trials == self.max_trials:
+					self.max_size += self.size_increment
+					self.trials = 0
+
+	def pop(self):
+		try:
+			item =  self.peek()
+		except ValueError:
+			raise ValueError("Stack underflow")
+
+		if not self.queue.isEmpty():
+			self.push(self.queue.dequeue())
+
+		return item
+
+class AutoAdaptiveQueue(Queue):
 
 	def __init__(self, max_trials, size_increment, *args, **kwargs):
 		self.max_trials = max_trials
@@ -142,7 +158,7 @@ class AutoAdaptiveQueue(Queue):
 			if self.trials == self.max_trials:
 				self.max_size += self.size_increment
 				self.trials = 0
-		
+
 class Printer(object, metaclass=abc.ABCMeta):
 	def __init__(self, name):
 		self.name = name
@@ -170,11 +186,11 @@ class Printer(object, metaclass=abc.ABCMeta):
 				node = node.next
 			display_message += str(node.value) + ")\n"
 		self.log(display_message)
-	
+
 	@abc.abstractmethod
 	def log(self, display_message):
 		raise NotImplementedError('child objects must define log to create a printer')
-		
+
 class ScreenPrinter(Printer):
 	def __init__(self, *args, **kwargs):
 		super(ScreenPrinter, self).__init__(*args, **kwargs)
@@ -187,7 +203,7 @@ class FilePrinter(Printer):
 	def __init__(self, file_path, *args, **kwargs):
 		self.file_path = file_path
 		super(FilePrinter, self).__init__(*args, **kwargs)
-	
+
 	def log(self, display_message):
 		with open(self.file_path, 'a') as f:
 			f.write(self.name)
