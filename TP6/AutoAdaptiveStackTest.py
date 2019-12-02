@@ -5,7 +5,7 @@ from app import AutoAdaptiveStack
 class AutoAdaptiveStackTest(unittest.TestCase):
 
     def setUp(self):
-        self.autoStack3 = AutoAdaptiveStack(3, 3, 3)
+        self.autoStack3 = AutoAdaptiveStack(3, 3, 3, 3)
 
     # Test __init__() 
     def test_a_Init(self):

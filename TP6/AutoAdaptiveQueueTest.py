@@ -5,7 +5,7 @@ from app import AutoAdaptiveQueue
 class AutoAdaptiveQueueTest(unittest.TestCase):
 
     def setUp(self):
-        self.autoQueue3 = AutoAdaptiveQueue(3, 3, 3)
+        self.autoQueue3 = AutoAdaptiveQueue(3, 3, 3, 3)
 
     # Test __init__() 
     def test_a_Init(self):
