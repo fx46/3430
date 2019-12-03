@@ -35,10 +35,10 @@ class LinkedList :
 		return self.list.pop(0)
 
 	def append(self, item):
-		self.list.append(item)
+		self.list.append(Node(item))
 
 	def prepend(self, item):
-		self.list.insert(0, item)
+		self.list.insert(0, Node(item))
 
 	def accept(self, visitor):
 		visitor.visit(self)
@@ -51,7 +51,7 @@ class Queue(LinkedList):
 		super(Queue, self).__init__(*args, **kwargs)
 
 	def isFull(self):
-		return self.n == self.max_size
+		return len(self.list) == self.max_size
 
 	# Adds the item to this queue.
 	def enqueue(self, item):
@@ -74,7 +74,7 @@ class Stack(LinkedList):
 
 	# Returns true if this stack is full.
 	def isFull(self):
-		return self.n == self.max_size
+		return len(self.list) == self.max_size
 
 	# Adds the item to this stack.
 	def push(self, item):
@@ -95,6 +95,7 @@ class AutoAdaptiveStack(Stack):
 		self.max_trials = max_trials
 		self.size_increment = size_increment
 		self.trials = 0
+		self.queueSize = queueSize
 		self.queue = Queue(queueSize)
 		super(AutoAdaptiveStack, self).__init__(*args, **kwargs)
 
@@ -129,6 +130,7 @@ class AutoAdaptiveQueue(Queue):
 		self.max_trials = max_trials
 		self.size_increment = size_increment
 		self.trials = 0
+		self.queueSize = queueSize
 		self.queue = Queue(queueSize)
 		super(AutoAdaptiveQueue, self).__init__(*args, **kwargs)
 
@@ -164,21 +166,21 @@ class Printer(object, metaclass=abc.ABCMeta):
 	def visit(self, list_obj):
 		if isinstance(list_obj, Stack):
 			display_message = "\n-------\n"
-			node = list_obj.first
+			node = list_obj.list[0]
 			while node:
 				display_message += '   '+str(node.value)+'   '
 				display_message += "\n-------\n"
 				node = node.next
 		elif isinstance(list_obj, Queue):
 			display_message = "\n|"
-			node = list_obj.first
+			node = list_obj.list[0]
 			while node:
 				display_message += str(node.value) + "|"
 				node = node.next
 			display_message += "\n"
 		else:
 			display_message = "\n("
-			node = list_obj.first
+			node = list_obj.list[0]
 			while node.next:
 				display_message += str(node.value) + ","
 				node = node.next
@@ -213,39 +215,21 @@ class Calculator:
 	def union(first_list, second_list):
 		if isinstance(first_list,Queue) and isinstance(second_list,Queue):
 			merged_queue = Queue(max_size=first_list.max_size+second_list.max_size)
-			merged_queue.first = first_list.first
-			last_node = merged_queue.first
-			while last_node.next:
-				last_node = last_node.next
-			last_node.next = second_list.first
-			merged_queue.n = first_list.n + second_list.n
+			for item in second_list.list:
+				first_list.append(item)
+			merged_queue.list = first_list.list
 			return merged_queue
 		elif isinstance(first_list,Stack) and isinstance(second_list,Stack):
 			merged_stack = Stack(max_size=first_list.max_size+second_list.max_size)
-			merged_stack.first = second_list.first
-			last_node = merged_stack.first
-			while last_node.next:
-				last_node = last_node.next
-			last_node.next = first_list.first
-			merged_stack.n = first_list.n + second_list.n
+			for item in second_list.list:
+				first_list.append(item)
+			merged_stack.list = first_list.list
 			return merged_stack
 		elif isinstance(first_list,LinkedList) and isinstance(second_list,LinkedList):
 			merged_list = LinkedList()
-			current_first = first_list.first
-			current_second = second_list.first
-			while current_first and current_second:
-				if rand.uniform(0,1) < 0.5:
-					merged_list.append(current_first.value)
-					current_first = current_first.next
-				else:
-					merged_list.append(current_second.value)
-					current_second = current_second.next
-			while current_first:
-				merged_list.append(current_first.value)
-				current_first = current_first.next
-			while current_second:
-				merged_list.append(current_second.value)
-				current_second = current_second.next
+			for item in second_list.list:
+				first_list.append(item)
+			merged_list.list = first_list.list
 			return merged_list
 		else:
 			raise ValueError('The types of both lists are different')

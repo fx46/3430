@@ -9,8 +9,7 @@ class LinkedListTest(unittest.TestCase):
 
     # Test __init__() 
     def test_a_Init(self):
-        self.assertTrue(self.linkedList.first == None)
-        self.assertTrue(self.linkedList.n == 0)
+        self.assertTrue(self.linkedList.isEmpty())
 
     # Test __init__() -> IsEmpty() -> size() -> check() -> peek() -> append() -> size() -> check() -> peek()
     def test_b_IsEmptyThenAppendThenIsNotEmpty(self):

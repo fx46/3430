@@ -25,6 +25,11 @@ class AutoAdaptiveStackTest(unittest.TestCase):
        
         sys.stdout = io.StringIO()
 
+        for i in range(self.autoStack3.queueSize):
+            self.assertRaises(ValueError, self.autoStack3.push("testQueue"))
+
+        self.assertTrue(self.autoStack3.queue.isFull())
+
         for i in range(self.autoStack3.max_trials):
             self.assertEqual(i , self.autoStack3.trials)
             self.assertRaises(ValueError, self.autoStack3.push("test4"))

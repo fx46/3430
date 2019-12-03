@@ -19,13 +19,7 @@ class CalculatorTest(unittest.TestCase):
             list2.append(i)
 
         UnitedList = Calculator.union(list1, list2)
-        numbersContained = 0
-        for i in numbersList1 + numbersList2:
-            number = UnitedList.peek().value
-            if number in numbersList1 + numbersList2:
-                numbersContained += 1
-                numbers.remove(number)
-        self.assertEqual(numbersContained, len(numbersList1 + numbersList2))
+        self.assertEqual(len(UnitedList.list), len(numbersList1 + numbersList2))
 
         # If list2 is bigger
         list1 = LinkedList()
@@ -41,13 +35,7 @@ class CalculatorTest(unittest.TestCase):
             list2.append(i)
 
         UnitedList = Calculator.union(list1, list2)
-        numbersContained = 0
-        for i in numbersList1 + numbersList2:
-            number = UnitedList.peek().value
-            if number in numbersList1 + numbersList2:
-                numbersContained += 1
-                numbers.remove(number)
-        self.assertEqual(numbersContained, len(numbersList1 + numbersList2))
+        self.assertEqual(len(UnitedList.list), len(numbersList1 + numbersList2))
 
         # If lists are the same size
         list1 = LinkedList()
@@ -63,15 +51,7 @@ class CalculatorTest(unittest.TestCase):
             list2.append(i)
 
         UnitedList = Calculator.union(list1, list2)
-        numbersContained = 0
-        for i in numbersList1 + numbersList2:
-            number = UnitedList.peek().value
-            if number in numbersList1 + numbersList2:
-                numbersContained += 1
-                numbers.remove(number)
-        self.assertEqual(numbersContained, len(numbersList1 + numbersList2))
-
-
+        self.assertEqual(len(UnitedList.list), len(numbersList1 + numbersList2))
 
     def test_b_UnionQueue(self):
         queue1 = Queue(3)

@@ -7,8 +7,8 @@ class FilePrinterTest(unittest.TestCase):
     def setUp(self):
         self.printer = FilePrinter("testFile.txt", "testName")
         self.linkedList = LinkedList()
-        self.stack = Stack(3)
-        self.queue = Queue(3)
+        self.stack = Stack(1)
+        self.queue = Queue(1)
 
     def tearDown(self):
         try:
@@ -23,28 +23,22 @@ class FilePrinterTest(unittest.TestCase):
 
     def test_b_VisitLinkedList(self):
         self.linkedList.append(1)
-        self.linkedList.append(2)
-        self.linkedList.append(3)
 
         self.linkedList.accept(self.printer)
         with open(self.printer.file_path, 'r') as testFile:
-            self.assertEqual(testFile.read(), self.printer.name + "\n(1,2,3)\n")
+            self.assertEqual(testFile.read(), self.printer.name + "\n(1)\n")
 
     def test_c_VisitStack(self):
         self.stack.push(1)
-        self.stack.push(2)
-        self.stack.push(3)
 
         self.stack.accept(self.printer)
         filler="\n-------\n"
         with open(self.printer.file_path, 'r') as testFile:
-            self.assertEqual(testFile.read(), self.printer.name +filler+'   3   '+filler+'   2   '+filler+'   1   '+filler)
+            self.assertEqual(testFile.read(), self.printer.name +filler+'   1   '+filler)
 
     def test_d_VisitLogQueue(self):
         self.queue.enqueue(1)
-        self.queue.enqueue(2)
-        self.queue.enqueue(3)
 
         self.queue.accept(self.printer)
         with open(self.printer.file_path, 'r') as testFile:
-            self.assertEqual(testFile.read(), self.printer.name + "\n|1|2|3|\n")
+            self.assertEqual(testFile.read(), self.printer.name + "\n|1|\n")
