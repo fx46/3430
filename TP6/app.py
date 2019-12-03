@@ -114,10 +114,11 @@ class AutoAdaptiveStack(Stack):
 					self.trials = 0
 
 	def pop(self):
+		item = None
 		try:
 			item =  self.peek()
 		except ValueError:
-			raise ValueError("Stack underflow")
+			print("Stack underflow")
 
 		if not self.queue.isEmpty():
 			self.push(self.queue.dequeue())
@@ -149,10 +150,11 @@ class AutoAdaptiveQueue(Queue):
 					self.trials = 0
 	
 	def dequeue(self):
+		item = None
 		try:
 			item = self.peek()
 		except ValueError:
-			raise ValueError("Stack underflow")
+			print("Stack underflow")
 
 		if not self.queue.isEmpty():
 			self.enqueue(self.queue.dequeue())
